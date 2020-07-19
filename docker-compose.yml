@@ -1,0 +1,26 @@
+version: '2.0'
+services:
+  backend:
+    container_name: manejador_casos_ex01
+    build: ./backend
+    image: peqalive/manejador-de-casos/backend:latest
+    hostname: manejador_casos_backend
+    depends_on: 
+        - mongo
+    env_file:
+        - ./backend/.env
+        - ./db/.env
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./backend/:/usr/src/app
+    links:
+        - mongo
+  mongo:
+    container_name: manejador_casos_db01
+    image: centos/mongodb-32-centos7
+    hostname: manejador_casos_mongodb
+    env_file: 
+        - ./db/.env
+    ports:
+        - "27017:27017"
